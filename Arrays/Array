@@ -1,0 +1,13 @@
+//Basic Array code to print a set of numbers.
+#include <stdio.h>
+int main()
+{
+    int a[5]={12,13,14,15,16};
+    int i;
+    for(int i=0;i<5;i++){
+      printf("%d ",a[i]);
+    }
+    int b=sizeof(a)/sizeof(a[0]);
+    printf("The size of the elements are:%d\n", b);
+    return 0;
+}
