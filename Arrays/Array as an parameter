@@ -1,0 +1,24 @@
+//Passing parameter to change an element in an existing array.
+#include <stdio.h>
+
+void fun(int A[],int n)
+{
+  int i;
+  for(i=0;i<n;i++){
+    printf("%d ",A[i]);
+  }
+   A[0]=25;
+}
+int main()
+{
+  int A[]={12,13,14,15,16};
+  fun(A,5);
+  //In the above call it print the current elements.
+  int i;
+  printf("\n Updated array \n");
+ //After completing the function it will update.
+  for(i=0;i<5;i++){
+    printf("%d ",A[i]);
+  }
+  return 0;
+}
