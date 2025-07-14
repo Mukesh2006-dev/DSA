@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+struct Array {
+    int A[10];
+    int size;
+    int length;
+};
+
+int main() {
+    struct Array arr = {{4, 12, 9, 15, 6, 10, 7, 2, 3, 8}, 10, 9}; 
+    printf("The array elements are: ");
+    for (int i = 0; i < arr.length; i++) {
+        printf("%d ", arr.A[i]);
+    }
+    printf("\n");
+    printf("The Reversed array is: ");
+  //By running the loop backwards we can reverse the elements
+    for (int i = arr.length - 1; i >= 0; i--) {
+        printf("%d ", arr.A[i]); 
+    }
+    printf("\n");
+    return 0;
+}
