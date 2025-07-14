@@ -1,0 +1,108 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Array {
+    int A[10];
+    int size;
+    int length;
+};
+//To display
+void display(struct Array arr) {
+    printf("The elements are:");
+    for (int i = 0; i < arr.length; i++) {
+        printf("%d ", arr.A[i]);   
+    }
+    printf("\n");
+}
+//To add the elements
+void append(struct Array *arr, int x){
+    if(arr->length<arr->size){
+        arr->A[arr->length++]=x;
+    }
+}
+//To add at a desired index
+void insert(struct Array *arr, int index, int x) {
+    int i;
+    if (index >= 0 && index <= arr->length && arr->length < arr->size) {
+        for (i = arr->length; i > index; i--) {
+            arr->A[i] = arr->A[i - 1];
+        }
+        arr->A[index] = x;
+        arr->length++;
+    }
+}
+//To delete
+void delete(struct Array *arr, int index) {
+    int i;
+    if (index >= 0 && index < arr->length) {
+        for (i = index; i < arr->length - 1; i++) {
+            arr->A[i] = arr->A[i + 1];
+        }
+        arr->length--;
+    }
+}
+//To retrive
+int get(struct Array *arr,int index){
+  if(index>=0 && index<arr->length){
+    return arr->A[index];
+    
+  }
+  return -1;
+}
+//To set
+void set(struct Array *arr,int index,int x){
+  if(index>=0 && index<arr->length){
+    arr->A[index]=x;
+  }
+}
+//To find max element
+int max(struct Array *arr) {
+    int max = arr->A[0];
+    for (int i = 1; i < arr->length; i++) {
+        if (arr->A[i] > max) {
+            max = arr->A[i];
+        }
+    }
+    return max;
+}
+//To find min element
+int min(struct Array *arr) {
+    int min = arr->A[0];
+    for (int i = 1; i < arr->length; i++) {
+        if (arr->A[i] < min) {
+            min = arr->A[i];
+        }
+    }
+    return min;
+}
+//Total sum
+int sum(struct Array *arr) {
+    int total = 0;
+    for (int i = 0; i < arr->length; i++) {
+        total += arr->A[i];
+    }
+    return total;
+}
+//Average of an array
+float avg(struct Array *arr) {
+    if (arr->length == 0) return 0.0; 
+    return (float)sum(arr) / arr->length;
+}
+int main() {
+    struct Array arr = {{12, 23, 34, 45, 56}, 10, 5};
+
+    append(&arr, 10);
+    insert(&arr, 4, 25);
+    delete(&arr, 0);
+    display(arr);
+    printf("The element at the given index is: %d\n", get(&arr, 5));
+    set(&arr, 5, 20);
+    printf("The element after changing is: %d\n", get(&arr, 5));
+    display(arr);
+    printf("The maximum element is: %d\n", max(&arr));
+    printf("The maximum element is: %d\n", min(&arr));
+    printf("The maximum element is: %d\n", sum(&arr));
+    printf("The maximum element is: %.2f\n", avg(&arr));
+
+    return 0;
+}
