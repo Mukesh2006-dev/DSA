@@ -1,0 +1,24 @@
+//To find dupllicate elements.
+#include <stdio.h>
+int main()
+{
+  char A[]="finding";
+  int i;
+  int j;
+//Replace the matching elements with 1
+  for(int i=0;A[i]!='\0';i++){
+    for(int j=i+1;A[j]!='\0';j++){
+      if(A[i]==A[j]){
+        A[j]=1;
+      }
+    }
+  }
+//After comparison checks for Duplicate elements.
+  for(int i=0;A[i]!='\0';i++){
+    if(A[i]!=1){
+      printf("%c",A[i]);
+    }
+  }
+    printf("\n");
+    return 0;
+}
