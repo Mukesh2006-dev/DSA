@@ -1,0 +1,29 @@
+//Code to check it the string contains same alphabets.
+//uses ascii code to compare.
+//upper case and lower case will have different ascii codes
+#include <stdio.h>
+
+int main() {
+    char A[] = "Cool";
+    char B[] = "loco";
+    int i;
+    int H[26] = {0};
+//English alpabets has 26letters.
+//it compares lower cases chaaracters.
+    for (i = 0; A[i] != '\0'; i++) {
+        H[A[i] - 'a'] += 1;
+    }
+
+    for (i = 0; B[i] != '\0'; i++) {
+        H[B[i] - 'a'] -= 1; 
+    }
+    for (i = 0; i < 26; i++) {
+        if (H[i] != 0) {
+            printf("It is not an anagram\n");
+            return 0;
+        }
+    }
+
+    printf("It is an anagram\n");
+    return 0;
+}
