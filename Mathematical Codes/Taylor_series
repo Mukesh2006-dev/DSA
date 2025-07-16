@@ -1,0 +1,18 @@
+#include <stdio.h>
+int Taylor(int m,int n){
+  static int p=1,f=1;
+  int r;
+  if(n==0){
+    return 1;
+  }
+  else{
+    r=Taylor(m,n-1); //We use of recursion
+    p=p*m; //forumlas
+    f=f*n;
+    return r+p/f; //returns the correct output
+  }
+}
+int main()
+{
+    printf("Hello, World! %d",Taylor(2,3));
+}
