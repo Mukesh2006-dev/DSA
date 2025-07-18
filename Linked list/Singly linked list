@@ -1,0 +1,135 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *next;
+} *first = NULL;
+
+void create(int A[], int n) { //To create a Node.
+    int i;
+    struct Node *t, *last;
+    first = (struct Node *)malloc(sizeof(struct Node));
+    first->data = A[0];
+    first->next = NULL;
+    last = first;
+
+    for (i = 1; i < n; i++) {
+        t = (struct Node *)malloc(sizeof(struct Node));
+        t->data = A[i];
+        t->next = NULL;
+        last->next = t;
+        last = t;
+    }
+}
+
+void display(struct Node *p) { //To display the linked list.
+    while (p != NULL) {
+        printf("%d->", p->data);
+        p = p->next;
+    }
+    printf("NULL\n");
+}
+
+int count(struct Node *p) { //To count no of nodes.
+    int c = 0;
+    while (p) {
+        c++;
+        p = p->next;
+    }
+    return c;
+}
+
+void Insert(struct Node *p, int index, int x) { //To insert new nodes.
+    struct Node *t = NULL;
+    int i;
+
+    if (index < 0 || index > count(p)) {
+        return;
+    }
+
+    t = (struct Node *)malloc(sizeof(struct Node));
+    t->data = x;
+
+    if (index == 0) {
+        t->next = first;
+        first = t;
+    } else {
+        for (i = 0; i < index - 1; i++) {
+            p = p->next;
+        }
+        if (p != NULL) {
+            t->next = p->next;
+            p->next = t;
+        }
+    }
+}
+
+int delete(struct Node *p, int index) { //To delete a node from the linked list.
+    struct Node *q = NULL;
+    int x = -1, i;
+
+    if (index < 1 || index > count(p))
+        return -1;
+
+    if (index == 1) {
+        q = first;
+        x = first->data;
+        first = first->next;
+        free(q);
+        return x;
+    } else {
+        for (i = 0; i < index - 1; i++) {
+            q = p;
+            p = p->next;
+        }
+        q->next = p->next;
+        x = p->data;
+        free(p);
+        return x;
+    }
+}
+
+int isSorted(struct Node *p) { //To sort the linked list.
+    while (p && p->next) {
+        if (p->data > p->next->data)
+            return 0;
+        p = p->next;
+    }
+    return 1;
+}
+
+void Reverse(struct Node *p) { //To reverse a Singly linked list.
+    struct Node *q = NULL;
+    struct Node *r = NULL;
+    while (p != NULL) {
+        r = q;
+        q = p;
+        p = p->next;
+        q->next = r;
+    }
+    first = q;
+}
+int max(struct Node *p) {
+    if (p == NULL) return -1; // or some error value if list is empty
+
+    int maxVal = p->data;
+    p = p->next;
+
+    while (p) {
+        if (p->data > maxVal) {
+            maxVal = p->data;
+        }
+        p = p->next;
+    }
+    return maxVal;
+}
+
+int main() {
+    int A[] = {3, 5, 7, 9};
+    create(A, 4);
+    Insert(first, 3, 2);
+    display(first);
+
+    return 0;
+}
