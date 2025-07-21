@@ -1,0 +1,122 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+struct Node{
+    int data;
+    struct Node* next;
+}*head;
+void create(int A[],int n){
+    int i;
+    struct Node*t,*last;
+    head=(struct Node*)malloc(sizeof(struct Node));
+    head->data=A[0];
+    head->next=head;
+    last=head;
+    for(i=1;i<n;i++){
+        t=(struct Node*)malloc(sizeof(struct Node));
+        t->data=A[i];
+        t->next=head;
+        last->next=t;
+        last=t;
+    }
+}
+void display(struct Node*p){
+    if(head==NULL){
+        printf("The linked list is empty");
+        return;
+    }
+    printf("The elements in the linked list are:\n");
+    do{
+        printf("%d->", p->data);
+        p=p->next;
+    }
+    while(p!=head); 
+}
+int count(struct Node*p){
+    int c=0;
+    if(head==NULL){
+        return 0;
+    }
+    p=head;
+    do{
+        c++;
+        p=p->next;
+    }
+    while(p!=head);
+    return c;
+}
+void Insert(struct Node*p,int pos,int x){
+    struct Node*t;
+    int i=0;
+    if(pos <0 || pos> count(p)){
+        return ;
+    }
+    if(pos==0){
+        t=(struct Node*)malloc(sizeof(struct Node));
+        t->data=x;
+    
+        if(head==NULL){
+            head=t;
+            t->next=head;
+        }
+        else{
+            while(p->next!=head){
+                p=p->next;
+            }
+                p->next=t;
+                t->next=head;
+                head=t;
+        }
+    }
+        else{
+            t=(struct Node*)malloc(sizeof(struct Node));
+                t->data=x;
+            for(i=0;i<pos-1;i++){
+                p=p->next;
+            }
+            t->next=p->next;
+                p->next=t;
+        }
+}
+void delete(struct Node*p,int index){
+    struct Node*q=NULL;
+    int x=0;
+    int i;
+    if(head==NULL){
+        return;
+    }
+    if(index==0){
+    if(head->next==head){
+        free(head);
+        head=NULL;
+        return ;
+    }
+       p=head;
+        while(p->next!=head){
+            p=p->next;
+        }
+        p->next=head->next;
+        x=head->data;
+        q=head;
+        head=head->next;
+        free(q);
+    }
+    else{
+        for(i=0;i<index-1;i++){
+            q=p;
+            p=p->next;
+        }
+        q->next=p->next;
+        x=p->data;
+        free(p);
+    }
+    printf("The deleted node is :%d \n",x);
+    
+ }
+int main() {
+    int A[]={12,13,14,15,16};
+    create(A,5);
+    Insert(head,2,17);
+    display(head);
+    return 0;
+}
