@@ -1,0 +1,52 @@
+#include <stdio.h>
+#define size 5
+
+int queue[size];
+int front=-1;
+int rear=-1;
+
+void enqueue(int value){
+    if(rear == size-1){
+        printf("Queue is overflow");
+    }
+    else{
+        if(front == -1){
+            front = 0;
+        }
+        rear++;
+        queue[rear]=value;
+        printf("Inserted value:%d",value);
+    }
+    printf("\n");
+}
+void dequeue(){
+    if(front == -1 || front>rear){
+        printf("The stack is empty");
+    }
+    else{
+        printf("Deleted element:%d",queue[front]);
+        front++;
+    }
+    printf("\n");
+}
+void display(){
+    if(front == -1 || front>rear){
+        printf("The stack is empty");
+    }
+    else{
+        printf("Queue elements:");
+        for(int i=front;i<=rear;i++){
+            printf("%d ",queue[i]);
+        }
+    }
+}
+int main() {
+    enqueue(10);
+    enqueue(20);
+    enqueue(30);
+    enqueue(40);
+    enqueue(50);
+    dequeue();
+    display();
+    return 0;
+}
