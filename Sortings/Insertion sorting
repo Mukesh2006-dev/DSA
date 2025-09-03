@@ -1,0 +1,22 @@
+#include <stdio.h>
+void Insertionsort(int A[],int n){
+    int i,j,key;
+    for(i=1;i<n;i++){
+     key=A[i];
+     j=i-1;
+    while(j>=0&&A[j]>key){
+        A[j+1]=A[j];
+        j--;
+    }
+    A[j+1]=key;
+    }
+}
+int main() {
+int A[]={5,8,7,3,2,10,11,12,1,4,6,9},n=12,i;
+Insertionsort(A,12);
+for(i=0;i<12;i++){
+    printf("%d ",A[i]);
+}
+printf("\n");
+    return 0;
+}
