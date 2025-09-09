@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <limits.h>
+#include <stdbool.h>
+ #define V 5
+ 
+ int extractMin(int key[],bool mstSet[]){
+  int min=INT_MAX,min_index=-1;
+  for(int v=1;v<=V;v++){
+    if(!mstSet[v]&&key[v]<min){
+      min=key[v];
+      min_index=v;
+    }
+   }
+   return min_index;
+ }
+ 
+ void printMST(int parent[],int graph[V+1][V+1]){
+   printf("Edge weight\n");
+   int totalCost=0;
+   for(int i=2;i<=V;i++){
+     printf("%d - %d  %d\n",parent[i],i,graph[i][parent[i]]);
+     totalCost+=graph[i][parent[i]];
+   }
+   printf("Total Cost of MST: %d\n", totalCost);
+ }
+ 
+ void primMST(int graph[V+1][V+1]){
+  int key[V+1];
+  int parent[V+1];
+  bool mstSet[V+1];
+  
+  for(int i=1;i<=V;i++){
+    key[i]=INT_MAX;
+    mstSet[i]=false;
+  }
+  
+  key[1]=0;
+  parent[1]=-1;
+  for(int count=1;count<V;count++){
+    int u=extractMin(key,mstSet);
+    mstSet[u]=true;
+    printf("\nIteration %d: Picked vertex%d\n",count,u);
+  for(int v=1;v<=V;v++){
+    if(graph[u][v]!=0 && !mstSet[v] && graph[u][v]<key[v]){
+      parent[v]=u;
+      key[v]=graph[u][v];
+      printf(" Updated vetex %d:key = %d,parent= %d\n",v,key[v],parent[v]);
+    }
+  }
+ }
+ printf("\nFinal MST:\n");
+ printMST(parent,graph);
+ }
+int main()
+{
+     int graph[V + 1][V + 1] = {
+        {0, 0, 0, 0, 0, 0}, 
+        {0, 0, 2, 0, 6, 0}, 
+        {0, 2, 0, 3, 8, 5}, 
+        {0, 0, 3, 0, 0, 7}, 
+        {0, 6, 8, 0, 0, 9},
+        {0, 0, 5, 7, 9, 0} 
+};
+primMST(graph);
+
+return 0;
+}
