@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define max 100
+int parent[max];
+void makeSet(int n){
+    for(int i=0;i<n;i++)
+    parent[i]=i;
+}
+int find(int i){
+    if(parent [i]!=i){
+        parent[i]=find(parent[i]);
+    }
+    return parent[i];
+}
+void unionSets(int u,int v){
+    int pu=find(u);
+    int pv=find(v);
+    if(pu!=pv)
+    parent[pu]=pv;
+}
+void sortEdges(int e,int src[],int dest[],int weight[]){
+    for(int i=0;i<e-1;i++){
+        for(int j=i+1;j<e;j++){
+            if(weight[i]>weight[j]){
+            int temp=weight[i];
+            weight[i]=weight[j];
+            weight[j]=temp;
+            
+            temp=src[i];
+            src[i]=src[j];
+            src[j]=temp;
+            
+            temp=dest[i];
+            dest[i]=dest[j];
+            dest[j]=temp;
+            }
+        }
+    }
+}
+void kruskal(int v,int e,int src[],int dest[],int weight[]){
+    makeSet(v);
+    sortEdges(e,src,dest,weight);
+    int totalCost=0;
+    printf("Edges in MST:\n");
+    for(int i=0;i<e;i++){
+        int u=src[i];
+        int z=dest[i];
+        if(find(u)!=find(z)){
+            printf("%d - %d: %d\n",u,z,weight[i]);
+            totalCost += weight[i];
+            unionSets(u,z);
+        }
+    }
+    printf("Total cost of MST: %d\n",totalCost);
+}
+int main(){
+    int v=7;
+    int e=9;
+    int src[]={1,2,3,4,5,5,7,7,1};
+    int dest[]={2,3,4,5,6,7,2,4,6};
+    int weight[]={28,16,12,22,25,24,14,18,10};
+    kruskal(v,e,src,dest,weight);
+    return 0; //Kruskal's Algoritm 
+}
