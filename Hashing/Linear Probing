@@ -1,0 +1,65 @@
+#include <stdio.h>
+#define SIZE 10
+int count=0;
+int hash(int key) {
+    return key % SIZE;
+}
+
+int probe(int H[], int key) {
+    int index = hash(key);
+    int i = 0;
+    while(H[(index + i) % SIZE] != 0) {
+        i++;
+        if(i == SIZE) return -1;
+    }
+    return (index + i) % SIZE;
+}
+
+void insert(int H[], int key) {
+    int index = hash(key);
+    if(H[index] == 0) {
+        H[index] = key;
+        count++;
+    } else {
+        index = probe(H, key);
+        if(index != -1)
+            H[index] = key;
+        else
+            printf("Hash Table is full! Cannot insert %d\n", key);
+    }
+}
+
+int search(int H[], int key) {
+    int index = hash(key);
+    int i = 0;
+    while(i < SIZE) {
+        int probeIndex = (index + i) % SIZE;
+        if(H[probeIndex] == key)
+            return probeIndex;
+        if(H[probeIndex] == 0)
+            return -1;
+        i++;
+    }
+    return -1;
+}
+
+int main() {
+    int HT[SIZE] = {0};
+     
+    insert(HT, 11);
+    insert(HT, 10);
+    insert(HT, 22);
+    insert(HT, 23);
+    insert(HT, 20);
+    for(int i=0;i<=count;i++){
+      printf("%d ",HT[i]);
+    }
+    printf("\n");
+    int pos = search(HT, 20);
+    if(pos != -1)
+        printf("Key 20 found at index %d\n", pos);
+    else
+        printf("Key 20 not found\n");
+
+    return 0;
+}
